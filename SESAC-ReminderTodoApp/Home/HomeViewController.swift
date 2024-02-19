@@ -14,7 +14,6 @@ final class HomeViewController: BaseViewController {
     private lazy var todoCollectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero, 
                                               collectionViewLayout: configureFlowLayout())
-        collectionView.alwaysBounceVertical = false
         return collectionView
     }()
     
@@ -87,8 +86,9 @@ final class HomeViewController: BaseViewController {
     }
     
     @objc func addButtonTapped() {
-//        let nav = UINavigationController(rootViewController: AddTodoViewController())
-//        present(nav, animated: true)
+        let nav = UINavigationController(rootViewController: AddViewController())
+        nav.navigationBar.tintColor = .white
+        present(nav, animated: true)
     }
 }
 
@@ -96,7 +96,7 @@ final class HomeViewController: BaseViewController {
 
 extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return CollectionType.allCases.count
+        return HomeCellType.allCases.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {

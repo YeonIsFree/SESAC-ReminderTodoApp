@@ -33,8 +33,8 @@ class HomeCollectionViewCell: BaseCollectionViewCell {
     // MARK: - Cell UI Configuration Method
     
     func configureCell(_ index: Int) {
-        iconImageView.image = CollectionType(rawValue: index)!.image
-        titleLable.text = CollectionType(rawValue: index)!.title
+        iconImageView.image = HomeCellType(rawValue: index)!.image
+        titleLable.text = HomeCellType(rawValue: index)!.title
     }
     
     override func render() {

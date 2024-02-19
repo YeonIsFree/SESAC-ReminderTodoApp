@@ -15,8 +15,17 @@
 		8C1F47692B83B06A00443879 /* SnapKit-Dynamic in Frameworks */ = {isa = PBXBuildFile; productRef = 8C1F47682B83B06A00443879 /* SnapKit-Dynamic */; };
 		8C1F476C2B83B2B200443879 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C1F476B2B83B2B200443879 /* BaseViewController.swift */; };
 		8C1F476E2B83B57E00443879 /* HomeCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C1F476D2B83B57E00443879 /* HomeCollectionViewCell.swift */; };
-		8C1F47702B83B66000443879 /* CollectionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C1F476F2B83B66000443879 /* CollectionType.swift */; };
+		8C1F47702B83B66000443879 /* HomeCellType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C1F476F2B83B66000443879 /* HomeCellType.swift */; };
 		8C1F47722B83B85200443879 /* BaseCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C1F47712B83B85200443879 /* BaseCollectionViewCell.swift */; };
+		8C1F47752B83C20400443879 /* AddViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C1F47742B83C20400443879 /* AddViewController.swift */; };
+		8C1F47772B83C26200443879 /* AddCellType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C1F47762B83C26200443879 /* AddCellType.swift */; };
+		8C1F47792B83C2B600443879 /* DateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C1F47782B83C2B600443879 /* DateViewController.swift */; };
+		8C1F477B2B83C46F00443879 /* PassDataDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C1F477A2B83C46F00443879 /* PassDataDelegate.swift */; };
+		8C1F477E2B83C4F900443879 /* TagViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C1F477D2B83C4F900443879 /* TagViewController.swift */; };
+		8C1F47802B83C50E00443879 /* PriorityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C1F477F2B83C50E00443879 /* PriorityViewController.swift */; };
+		8C1F47832B83C85A00443879 /* MemoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C1F47822B83C85A00443879 /* MemoTableViewCell.swift */; };
+		8C1F47852B83C86B00443879 /* AddTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C1F47842B83C86B00443879 /* AddTableViewCell.swift */; };
+		8C1F47872B83C89200443879 /* BaseTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C1F47862B83C89200443879 /* BaseTableViewCell.swift */; };
 		8C2204382B83A31700519E19 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C2204372B83A31700519E19 /* AppDelegate.swift */; };
 		8C22043A2B83A31700519E19 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C2204392B83A31700519E19 /* SceneDelegate.swift */; };
 		8C22043C2B83A31700519E19 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C22043B2B83A31700519E19 /* ViewController.swift */; };
@@ -30,8 +39,17 @@
 /* Begin PBXFileReference section */
 		8C1F476B2B83B2B200443879 /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		8C1F476D2B83B57E00443879 /* HomeCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCollectionViewCell.swift; sourceTree = "<group>"; };
-		8C1F476F2B83B66000443879 /* CollectionType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionType.swift; sourceTree = "<group>"; };
+		8C1F476F2B83B66000443879 /* HomeCellType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCellType.swift; sourceTree = "<group>"; };
 		8C1F47712B83B85200443879 /* BaseCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCollectionViewCell.swift; sourceTree = "<group>"; };
+		8C1F47742B83C20400443879 /* AddViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddViewController.swift; sourceTree = "<group>"; };
+		8C1F47762B83C26200443879 /* AddCellType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCellType.swift; sourceTree = "<group>"; };
+		8C1F47782B83C2B600443879 /* DateViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateViewController.swift; sourceTree = "<group>"; };
+		8C1F477A2B83C46F00443879 /* PassDataDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PassDataDelegate.swift; sourceTree = "<group>"; };
+		8C1F477D2B83C4F900443879 /* TagViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagViewController.swift; sourceTree = "<group>"; };
+		8C1F477F2B83C50E00443879 /* PriorityViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PriorityViewController.swift; sourceTree = "<group>"; };
+		8C1F47822B83C85A00443879 /* MemoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoTableViewCell.swift; sourceTree = "<group>"; };
+		8C1F47842B83C86B00443879 /* AddTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTableViewCell.swift; sourceTree = "<group>"; };
+		8C1F47862B83C89200443879 /* BaseTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseTableViewCell.swift; sourceTree = "<group>"; };
 		8C2204342B83A31700519E19 /* SESAC-ReminderTodoApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "SESAC-ReminderTodoApp.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8C2204372B83A31700519E19 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8C2204392B83A31700519E19 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -66,8 +84,40 @@
 			children = (
 				8C1F476B2B83B2B200443879 /* BaseViewController.swift */,
 				8C1F47712B83B85200443879 /* BaseCollectionViewCell.swift */,
+				8C1F47862B83C89200443879 /* BaseTableViewCell.swift */,
 			);
 			path = Base;
+			sourceTree = "<group>";
+		};
+		8C1F47732B83C1EF00443879 /* Add */ = {
+			isa = PBXGroup;
+			children = (
+				8C1F47812B83C82600443879 /* TableViewCell */,
+				8C1F47742B83C20400443879 /* AddViewController.swift */,
+				8C1F47762B83C26200443879 /* AddCellType.swift */,
+				8C1F47782B83C2B600443879 /* DateViewController.swift */,
+				8C1F477D2B83C4F900443879 /* TagViewController.swift */,
+				8C1F477F2B83C50E00443879 /* PriorityViewController.swift */,
+			);
+			path = Add;
+			sourceTree = "<group>";
+		};
+		8C1F477C2B83C4DC00443879 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				8C2204372B83A31700519E19 /* AppDelegate.swift */,
+				8C2204392B83A31700519E19 /* SceneDelegate.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		8C1F47812B83C82600443879 /* TableViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				8C1F47822B83C85A00443879 /* MemoTableViewCell.swift */,
+				8C1F47842B83C86B00443879 /* AddTableViewCell.swift */,
+			);
+			path = TableViewCell;
 			sourceTree = "<group>";
 		};
 		8C22042B2B83A31700519E19 = {
@@ -89,10 +139,12 @@
 		8C2204362B83A31700519E19 /* SESAC-ReminderTodoApp */ = {
 			isa = PBXGroup;
 			children = (
+				8C1F477C2B83C4DC00443879 /* App */,
 				8C22044B2B83A32B00519E19 /* Delegates */,
 				8C22044C2B83A34D00519E19 /* Extension */,
 				8C1F476A2B83B2A900443879 /* Base */,
 				8C22044F2B83A3DC00519E19 /* Home */,
+				8C1F47732B83C1EF00443879 /* Add */,
 				8C22043B2B83A31700519E19 /* ViewController.swift */,
 				8C22043D2B83A31700519E19 /* Main.storyboard */,
 				8C2204402B83A31900519E19 /* Assets.xcassets */,
@@ -105,8 +157,7 @@
 		8C22044B2B83A32B00519E19 /* Delegates */ = {
 			isa = PBXGroup;
 			children = (
-				8C2204372B83A31700519E19 /* AppDelegate.swift */,
-				8C2204392B83A31700519E19 /* SceneDelegate.swift */,
+				8C1F477A2B83C46F00443879 /* PassDataDelegate.swift */,
 			);
 			path = Delegates;
 			sourceTree = "<group>";
@@ -124,7 +175,7 @@
 			children = (
 				8C2204502B83A3E700519E19 /* HomeViewController.swift */,
 				8C1F476D2B83B57E00443879 /* HomeCollectionViewCell.swift */,
-				8C1F476F2B83B66000443879 /* CollectionType.swift */,
+				8C1F476F2B83B66000443879 /* HomeCellType.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -214,15 +265,24 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8C1F47752B83C20400443879 /* AddViewController.swift in Sources */,
 				8C1F476E2B83B57E00443879 /* HomeCollectionViewCell.swift in Sources */,
 				8C2204512B83A3E700519E19 /* HomeViewController.swift in Sources */,
+				8C1F47832B83C85A00443879 /* MemoTableViewCell.swift in Sources */,
+				8C1F47872B83C89200443879 /* BaseTableViewCell.swift in Sources */,
+				8C1F47802B83C50E00443879 /* PriorityViewController.swift in Sources */,
+				8C1F47772B83C26200443879 /* AddCellType.swift in Sources */,
+				8C1F47792B83C2B600443879 /* DateViewController.swift in Sources */,
+				8C1F47852B83C86B00443879 /* AddTableViewCell.swift in Sources */,
 				8C1F47722B83B85200443879 /* BaseCollectionViewCell.swift in Sources */,
 				8C22043C2B83A31700519E19 /* ViewController.swift in Sources */,
 				8C22044E2B83A36500519E19 /* Identifiable.swift in Sources */,
 				8C2204382B83A31700519E19 /* AppDelegate.swift in Sources */,
-				8C1F47702B83B66000443879 /* CollectionType.swift in Sources */,
+				8C1F47702B83B66000443879 /* HomeCellType.swift in Sources */,
 				8C22043A2B83A31700519E19 /* SceneDelegate.swift in Sources */,
+				8C1F477B2B83C46F00443879 /* PassDataDelegate.swift in Sources */,
 				8C1F476C2B83B2B200443879 /* BaseViewController.swift in Sources */,
+				8C1F477E2B83C4F900443879 /* TagViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

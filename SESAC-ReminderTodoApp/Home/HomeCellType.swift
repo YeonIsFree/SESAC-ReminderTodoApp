@@ -7,7 +7,7 @@
 
 import UIKit
 
-enum CollectionType: Int, CaseIterable {
+enum HomeCellType: Int, CaseIterable {
     case today
     case scheduled
     case all

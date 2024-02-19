@@ -15,6 +15,9 @@ class BaseViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        view.backgroundColor = .systemBackground
+        
         render()
         configureGlobalNavigation()
         showToast()
@@ -23,7 +26,6 @@ class BaseViewController: UIViewController {
     func render() { }
     
     func configureGlobalNavigation() {
-        navigationController?.navigationBar.prefersLargeTitles = true
         navigationItem.titleView?.tintColor = .white
     }
     
