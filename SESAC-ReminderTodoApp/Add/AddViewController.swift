@@ -14,11 +14,15 @@ class AddViewController: BaseViewController {
     var todoTitle: String = ""
     var todoMemo: String = ""
     
-    var todoDate: Date?
-    
     // 다른 화면에서 클로저로 받아온 값들을 담아두는 배열 (Textfield Memo, date는 제외)
     // AddCellType Enum의 rawValue 순서로 저장.
     var changedValues: [String] = Array(repeating: "", count: AddCellType.allCases.count)
+    
+    var photo: UIImage? {
+        didSet {
+            addTableView.reloadData()
+        }
+    }
     
     // MARK: - UI Property
     
@@ -44,7 +48,7 @@ class AddViewController: BaseViewController {
         } else {
             let todo = TodoTable(todoTitle: todoTitle,
                                  todoMemo: todoMemo,
-                                 date: todoDate ?? Date(),
+                                 date: DateFormatter.convertToDate(changedValues[AddCellType.todoDate.rawValue]) ?? Date(),
                                  tag: changedValues[AddCellType.todoTag.rawValue],
                                  priority: changedValues[AddCellType.priority.rawValue],
                                  image: changedValues[AddCellType.addImage.rawValue])
@@ -63,7 +67,7 @@ class AddViewController: BaseViewController {
     // MARK: - UI Configuration Method
     
     private func configureNavigationBar() {
-//        navigationController?.navigationBar.prefersLargeTitles = false
+        navigationController?.navigationBar.prefersLargeTitles = false
         navigationItem.title = "새로운 할 일"
         
         let leftBarButton = UIBarButtonItem()
@@ -139,6 +143,9 @@ extension AddViewController: UITableViewDelegate, UITableViewDataSource {
             // 다음 화면에서 현재 화면으로 역 값 전달
             cell.cellSubTitleLabel.text = changedValues[indexPath.section]
             
+            // 이미지
+            cell.cellImageView.image = photo
+            
             return cell
         }
     }
@@ -148,6 +155,15 @@ extension AddViewController: UITableViewDelegate, UITableViewDataSource {
         switch cellType {
         case .todoMemo:
             break
+        case .addImage:
+            let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+            let takePhotoAction = UIAlertAction(title: "사진 촬영", style: .default)
+            let showAlbum = UIAlertAction(title: "앨범에서 선택", style: .default)
+            let cancel = UIAlertAction(title: "취소", style: .cancel)
+            alert.addAction(takePhotoAction)
+            alert.addAction(showAlbum)
+            alert.addAction(cancel)
+            present(alert, animated: true)
         default:
             if let vc = cellType.viewController {
                 vc.changedValue = { value in
@@ -169,6 +185,23 @@ extension AddViewController: UITextFieldDelegate {
         } else {
             todoMemo = textField.text!
         }
+    }
+}
+
+ // MARK: - UIImagePickerController Delegate
+
+extension AddViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        dismiss(animated: true)
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+    
+        if let pickedImage = info[UIImagePickerController.InfoKey.editedImage] as? UIImage {
+            photo = pickedImage
+        }
+        
+        dismiss(animated: true)
     }
 }
 

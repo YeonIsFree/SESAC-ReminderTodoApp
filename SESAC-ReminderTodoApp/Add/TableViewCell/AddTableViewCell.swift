@@ -26,10 +26,20 @@ class AddTableViewCell: BaseTableViewCell {
         return label
     }()
     
+    let cellImageView: UIImageView = {
+        let view = UIImageView()
+        view.image = UIImage(systemName: "star.fill")
+        view.contentMode = .scaleAspectFit
+        return view
+    }()
+    
     // MARK: - Cell Configuration Method
     
     func configureCell(_ index: Int) {
-        cellTitleLabel.text = AddCellType(rawValue: index)?.title
+        let cellType = AddCellType(rawValue: index)
+        cellTitleLabel.text = cellType?.title
+        
+        cellImageView.isHidden = (cellType == .addImage) ? false : true
     }
     
     override func render() {
@@ -43,6 +53,14 @@ class AddTableViewCell: BaseTableViewCell {
         contentView.addSubview(cellSubTitleLabel)
         cellSubTitleLabel.snp.makeConstraints { make in
             make.top.bottom.equalTo(contentView)
+            make.centerY.equalTo(contentView)
+            make.trailing.equalTo(contentView).inset(10)
+        }
+        
+        contentView.addSubview(cellImageView)
+        cellImageView.snp.makeConstraints { make in
+            make.top.bottom.equalTo(contentView)
+            make.centerY.equalTo(contentView)
             make.trailing.equalTo(contentView).inset(10)
         }
     }

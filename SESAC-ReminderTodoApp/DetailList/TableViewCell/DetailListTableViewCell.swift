@@ -68,6 +68,17 @@ class DetailListTableViewCell: BaseTableViewCell {
         return label
     }()
     
+     // MARK: - Init
+    
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        checkButton.addTarget(self, action: #selector(checkButtonTapped), for: .touchUpInside)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     // MARK: - UI Configuration Methods
     
     func configureTodoCell(_ todo: TodoTable) {
