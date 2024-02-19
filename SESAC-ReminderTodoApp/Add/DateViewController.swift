@@ -26,7 +26,7 @@ class DateViewController: BaseViewController, PassDataDelegate {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        
+        changedValue?(DateFormatter.convertToString(datePicker.date))
     }
     
      // MARK: - UI Configuration Method

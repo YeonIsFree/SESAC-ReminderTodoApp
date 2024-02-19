@@ -26,6 +26,7 @@ class BaseViewController: UIViewController {
     func render() { }
     
     func configureGlobalNavigation() {
+        navigationController?.navigationBar.prefersLargeTitles = true
         navigationItem.titleView?.tintColor = .white
     }
     

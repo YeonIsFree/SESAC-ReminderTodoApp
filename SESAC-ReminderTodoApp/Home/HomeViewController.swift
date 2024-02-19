@@ -6,28 +6,60 @@
 //
 
 import UIKit
+import RealmSwift
 
 final class HomeViewController: BaseViewController {
     
-     // MARK: - UI Properties
+    var token: NSObjectProtocol?
+    
+    deinit {
+        if let token {
+            NotificationCenter.default.removeObserver(token)
+        }
+    }
+    
+    let repository = TodoTableRepository()
+    
+    // MARK: - UI Properties
     
     private lazy var todoCollectionView: UICollectionView = {
-        let collectionView = UICollectionView(frame: .zero, 
+        let collectionView = UICollectionView(frame: .zero,
                                               collectionViewLayout: configureFlowLayout())
         return collectionView
     }()
     
     private let toolBar = UIToolbar()
     
-     // MARK: - Life Cycle Method
+    // MARK: - Life Cycle Method
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        addObserver()
         configureCollectionView()
         configureToolBar()
     }
     
-     // MARK: - UI Configuration Methods
+    // MARK: - Notification Methods
+    
+    private func addObserver() {
+        token = NotificationCenter.default.addObserver(forName: AddViewController.todoListDidChanged,
+                                                       object: nil,
+                                                       queue: OperationQueue.main,
+                                                       using: { [weak self] _ in
+            print("List DID CHANGED!")
+            self?.todoCollectionView.reloadData()
+        })
+        
+        token = NotificationCenter.default.addObserver(forName: DetailListViewController.completeListDidChange,
+                                                       object: nil,
+                                                       queue: OperationQueue.main,
+                                                       using: { [weak self] _ in
+            print("Complete List DID CHANGED!")
+            self?.todoCollectionView.reloadData()
+        })
+    }
+    
+    // MARK: - UI Configuration Methods
     
     override func render() {
         view.addSubview(todoCollectionView)
@@ -57,7 +89,7 @@ final class HomeViewController: BaseViewController {
     private func configureCollectionView() {
         todoCollectionView.delegate = self
         todoCollectionView.dataSource = self
-        todoCollectionView.register(HomeCollectionViewCell.self, 
+        todoCollectionView.register(HomeCollectionViewCell.self,
                                     forCellWithReuseIdentifier: HomeCollectionViewCell.identifier)
     }
     
@@ -92,7 +124,7 @@ final class HomeViewController: BaseViewController {
     }
 }
 
- // MARK: - UICollectionView Delegate
+// MARK: - UICollectionView Delegate
 
 extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -104,6 +136,18 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
         
         cell.configureCell(indexPath.item)
         
+        let cellType = HomeCellType.allCases[indexPath.item]
+        cell.countLabel.text = "\(repository.fetchTodoList(cellType).count)"
+        
         return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let vc = DetailListViewController()
+        let cellType = HomeCellType.allCases[indexPath.item]
+        vc.cellType = cellType
+        vc.navigationItem.title = cellType.title
+        vc.navigationController?.navigationBar.tintColor = .white
+        navigationController?.pushViewController(vc, animated: true)
     }
 }

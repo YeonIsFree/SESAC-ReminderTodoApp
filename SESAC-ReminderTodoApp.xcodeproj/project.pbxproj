@@ -26,6 +26,11 @@
 		8C1F47832B83C85A00443879 /* MemoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C1F47822B83C85A00443879 /* MemoTableViewCell.swift */; };
 		8C1F47852B83C86B00443879 /* AddTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C1F47842B83C86B00443879 /* AddTableViewCell.swift */; };
 		8C1F47872B83C89200443879 /* BaseTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C1F47862B83C89200443879 /* BaseTableViewCell.swift */; };
+		8C1F47892B83F28600443879 /* DateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C1F47882B83F28600443879 /* DateFormatter.swift */; };
+		8C1F478C2B83F63200443879 /* TodoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C1F478B2B83F63200443879 /* TodoModel.swift */; };
+		8C1F478E2B83F8AE00443879 /* TodoTableRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C1F478D2B83F8AE00443879 /* TodoTableRepository.swift */; };
+		8C1F47912B84059C00443879 /* DetailListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C1F47902B84059C00443879 /* DetailListViewController.swift */; };
+		8C1F47942B8407ED00443879 /* DetailListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C1F47932B8407ED00443879 /* DetailListTableViewCell.swift */; };
 		8C2204382B83A31700519E19 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C2204372B83A31700519E19 /* AppDelegate.swift */; };
 		8C22043A2B83A31700519E19 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C2204392B83A31700519E19 /* SceneDelegate.swift */; };
 		8C22043C2B83A31700519E19 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C22043B2B83A31700519E19 /* ViewController.swift */; };
@@ -50,6 +55,11 @@
 		8C1F47822B83C85A00443879 /* MemoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoTableViewCell.swift; sourceTree = "<group>"; };
 		8C1F47842B83C86B00443879 /* AddTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTableViewCell.swift; sourceTree = "<group>"; };
 		8C1F47862B83C89200443879 /* BaseTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseTableViewCell.swift; sourceTree = "<group>"; };
+		8C1F47882B83F28600443879 /* DateFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateFormatter.swift; sourceTree = "<group>"; };
+		8C1F478B2B83F63200443879 /* TodoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoModel.swift; sourceTree = "<group>"; };
+		8C1F478D2B83F8AE00443879 /* TodoTableRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoTableRepository.swift; sourceTree = "<group>"; };
+		8C1F47902B84059C00443879 /* DetailListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailListViewController.swift; sourceTree = "<group>"; };
+		8C1F47932B8407ED00443879 /* DetailListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailListTableViewCell.swift; sourceTree = "<group>"; };
 		8C2204342B83A31700519E19 /* SESAC-ReminderTodoApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "SESAC-ReminderTodoApp.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8C2204372B83A31700519E19 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8C2204392B83A31700519E19 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -120,6 +130,32 @@
 			path = TableViewCell;
 			sourceTree = "<group>";
 		};
+		8C1F478A2B83F5E400443879 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				8C1F478B2B83F63200443879 /* TodoModel.swift */,
+				8C1F478D2B83F8AE00443879 /* TodoTableRepository.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		8C1F478F2B84057700443879 /* DetailList */ = {
+			isa = PBXGroup;
+			children = (
+				8C1F47922B8407D600443879 /* TableViewCell */,
+				8C1F47902B84059C00443879 /* DetailListViewController.swift */,
+			);
+			path = DetailList;
+			sourceTree = "<group>";
+		};
+		8C1F47922B8407D600443879 /* TableViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				8C1F47932B8407ED00443879 /* DetailListTableViewCell.swift */,
+			);
+			path = TableViewCell;
+			sourceTree = "<group>";
+		};
 		8C22042B2B83A31700519E19 = {
 			isa = PBXGroup;
 			children = (
@@ -139,12 +175,14 @@
 		8C2204362B83A31700519E19 /* SESAC-ReminderTodoApp */ = {
 			isa = PBXGroup;
 			children = (
+				8C1F478A2B83F5E400443879 /* Model */,
 				8C1F477C2B83C4DC00443879 /* App */,
 				8C22044B2B83A32B00519E19 /* Delegates */,
 				8C22044C2B83A34D00519E19 /* Extension */,
 				8C1F476A2B83B2A900443879 /* Base */,
 				8C22044F2B83A3DC00519E19 /* Home */,
 				8C1F47732B83C1EF00443879 /* Add */,
+				8C1F478F2B84057700443879 /* DetailList */,
 				8C22043B2B83A31700519E19 /* ViewController.swift */,
 				8C22043D2B83A31700519E19 /* Main.storyboard */,
 				8C2204402B83A31900519E19 /* Assets.xcassets */,
@@ -166,6 +204,7 @@
 			isa = PBXGroup;
 			children = (
 				8C22044D2B83A36500519E19 /* Identifiable.swift */,
+				8C1F47882B83F28600443879 /* DateFormatter.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -269,14 +308,19 @@
 				8C1F476E2B83B57E00443879 /* HomeCollectionViewCell.swift in Sources */,
 				8C2204512B83A3E700519E19 /* HomeViewController.swift in Sources */,
 				8C1F47832B83C85A00443879 /* MemoTableViewCell.swift in Sources */,
+				8C1F47942B8407ED00443879 /* DetailListTableViewCell.swift in Sources */,
 				8C1F47872B83C89200443879 /* BaseTableViewCell.swift in Sources */,
+				8C1F47892B83F28600443879 /* DateFormatter.swift in Sources */,
 				8C1F47802B83C50E00443879 /* PriorityViewController.swift in Sources */,
 				8C1F47772B83C26200443879 /* AddCellType.swift in Sources */,
+				8C1F478E2B83F8AE00443879 /* TodoTableRepository.swift in Sources */,
+				8C1F47912B84059C00443879 /* DetailListViewController.swift in Sources */,
 				8C1F47792B83C2B600443879 /* DateViewController.swift in Sources */,
 				8C1F47852B83C86B00443879 /* AddTableViewCell.swift in Sources */,
 				8C1F47722B83B85200443879 /* BaseCollectionViewCell.swift in Sources */,
 				8C22043C2B83A31700519E19 /* ViewController.swift in Sources */,
 				8C22044E2B83A36500519E19 /* Identifiable.swift in Sources */,
+				8C1F478C2B83F63200443879 /* TodoModel.swift in Sources */,
 				8C2204382B83A31700519E19 /* AppDelegate.swift in Sources */,
 				8C1F47702B83B66000443879 /* HomeCellType.swift in Sources */,
 				8C22043A2B83A31700519E19 /* SceneDelegate.swift in Sources */,

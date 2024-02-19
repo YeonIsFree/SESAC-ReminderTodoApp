@@ -9,10 +9,14 @@ import UIKit
 
 class AddViewController: BaseViewController {
     
+    let repository = TodoTableRepository()
+    
     var todoTitle: String = ""
     var todoMemo: String = ""
     
-    // 다른 화면에서 클로저로 받아온 값들을 담아두는 배열 (Textfield Memo는 제외)
+    var todoDate: Date?
+    
+    // 다른 화면에서 클로저로 받아온 값들을 담아두는 배열 (Textfield Memo, date는 제외)
     // AddCellType Enum의 rawValue 순서로 저장.
     var changedValues: [String] = Array(repeating: "", count: AddCellType.allCases.count)
     
@@ -38,6 +42,15 @@ class AddViewController: BaseViewController {
         if todoTitle == "" {
             self.view.makeToast("제목을 입력해주세요", duration: 2.0, position: .top)
         } else {
+            let todo = TodoTable(todoTitle: todoTitle,
+                                 todoMemo: todoMemo,
+                                 date: todoDate ?? Date(),
+                                 tag: changedValues[AddCellType.todoTag.rawValue],
+                                 priority: changedValues[AddCellType.priority.rawValue],
+                                 image: changedValues[AddCellType.addImage.rawValue])
+            repository.createTodo(todo)
+            
+            NotificationCenter.default.post(name: AddViewController.todoListDidChanged, object: nil)
             
             dismiss(animated: true)
         }
@@ -123,6 +136,9 @@ extension AddViewController: UITableViewDelegate, UITableViewDataSource {
             cell.accessoryType = .disclosureIndicator
             cell.selectionStyle = .none
             
+            // 다음 화면에서 현재 화면으로 역 값 전달
+            cell.cellSubTitleLabel.text = changedValues[indexPath.section]
+            
             return cell
         }
     }
@@ -154,4 +170,10 @@ extension AddViewController: UITextFieldDelegate {
             todoMemo = textField.text!
         }
     }
+}
+
+ // MARK: - Notification
+
+extension AddViewController {
+    static let todoListDidChanged = Notification.Name(rawValue: "todoListChanged")
 }

@@ -25,7 +25,6 @@ class PriorityViewController: BaseViewController, PassDataDelegate {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        // 클로저로 이전 화면에 값 전달
         let idx = segmentedControl.selectedSegmentIndex
         if let priority = segmentedControl.titleForSegment(at: idx) {
             changedValue?(priority)
