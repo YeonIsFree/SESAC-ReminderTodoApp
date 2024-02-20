@@ -34,6 +34,9 @@ final class HomeViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        repository.getFileURL()
+        
         addObserver()
         configureCollectionView()
         configureToolBar()

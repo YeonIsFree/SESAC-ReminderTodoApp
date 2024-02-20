@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import PhotosUI
 
 class AddViewController: BaseViewController {
     
@@ -20,7 +21,9 @@ class AddViewController: BaseViewController {
     
     var photo: UIImage? {
         didSet {
-            addTableView.reloadData()
+            DispatchQueue.main.async {
+                self.addTableView.reloadData()
+            }
         }
     }
     
@@ -50,10 +53,15 @@ class AddViewController: BaseViewController {
                                  todoMemo: todoMemo,
                                  date: DateFormatter.convertToDate(changedValues[AddCellType.todoDate.rawValue]) ?? Date(),
                                  tag: changedValues[AddCellType.todoTag.rawValue],
-                                 priority: changedValues[AddCellType.priority.rawValue],
-                                 image: changedValues[AddCellType.addImage.rawValue])
+                                 priority: changedValues[AddCellType.priority.rawValue])
+            
             repository.createTodo(todo)
             
+            if let photo {
+                saveImageToDocument(image: photo, filename: "\(todo.id)")
+            }
+            
+            // todoList가 변경됐음을 post
             NotificationCenter.default.post(name: AddViewController.todoListDidChanged, object: nil)
             
             dismiss(animated: true)
@@ -65,6 +73,17 @@ class AddViewController: BaseViewController {
     }
     
     // MARK: - UI Configuration Method
+    
+    func showPickerView() {
+        var configuration = PHPickerConfiguration()
+        configuration.filter = .images
+        
+        let picker = PHPickerViewController(configuration: configuration)
+        
+        picker.delegate = self
+        
+        self.present(picker, animated: true)
+    }
     
     private func configureNavigationBar() {
         navigationController?.navigationBar.prefersLargeTitles = false
@@ -136,15 +155,15 @@ extension AddViewController: UITableViewDelegate, UITableViewDataSource {
         default:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: AddTableViewCell.identifier, for: indexPath) as? AddTableViewCell else { return UITableViewCell() }
             
+            // 이미지
+            cell.cellImageView.image = photo
+            
             cell.configureCell(indexPath.section)
             cell.accessoryType = .disclosureIndicator
             cell.selectionStyle = .none
             
             // 다음 화면에서 현재 화면으로 역 값 전달
             cell.cellSubTitleLabel.text = changedValues[indexPath.section]
-            
-            // 이미지
-            cell.cellImageView.image = photo
             
             return cell
         }
@@ -156,13 +175,18 @@ extension AddViewController: UITableViewDelegate, UITableViewDataSource {
         case .todoMemo:
             break
         case .addImage:
+            // show action sheet
             let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
             let takePhotoAction = UIAlertAction(title: "사진 촬영", style: .default)
-            let showAlbum = UIAlertAction(title: "앨범에서 선택", style: .default)
+            let showAlbum = UIAlertAction(title: "앨범에서 선택", style: .default) { _ in
+                self.showPickerView()
+            }
             let cancel = UIAlertAction(title: "취소", style: .cancel)
+            
             alert.addAction(takePhotoAction)
             alert.addAction(showAlbum)
             alert.addAction(cancel)
+            
             present(alert, animated: true)
         default:
             if let vc = cellType.viewController {
@@ -171,6 +195,22 @@ extension AddViewController: UITableViewDelegate, UITableViewDataSource {
                     self.addTableView.reloadData()
                 }
                 navigationController?.pushViewController(vc, animated: true)
+            }
+        }
+    }
+}
+
+// MARK: - PHPickerViewController Delegate
+
+extension AddViewController: PHPickerViewControllerDelegate {
+    func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
+        
+        picker.dismiss(animated: true)
+        
+        if let itemProvider = results.first?.itemProvider,
+           itemProvider.canLoadObject(ofClass: UIImage.self) {
+            itemProvider.loadObject(ofClass: UIImage.self) { image, error in
+                self.photo = image as? UIImage
             }
         }
     }
@@ -188,24 +228,7 @@ extension AddViewController: UITextFieldDelegate {
     }
 }
 
- // MARK: - UIImagePickerController Delegate
-
-extension AddViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-        dismiss(animated: true)
-    }
-    
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-    
-        if let pickedImage = info[UIImagePickerController.InfoKey.editedImage] as? UIImage {
-            photo = pickedImage
-        }
-        
-        dismiss(animated: true)
-    }
-}
-
- // MARK: - Notification
+// MARK: - Notification
 
 extension AddViewController {
     static let todoListDidChanged = Notification.Name(rawValue: "todoListChanged")

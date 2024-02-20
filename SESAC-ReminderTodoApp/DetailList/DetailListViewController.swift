@@ -92,6 +92,9 @@ extension DetailListViewController: UITableViewDelegate, UITableViewDataSource {
         cell.todo = todo
         cell.configureTodoCell(todo)
         
+        // 이미지 세팅
+        cell.photoImageView.image = loadImageFromDocument(filename: "\(todo.id)")
+        
         return cell
     }
     
@@ -110,7 +113,11 @@ extension DetailListViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
+            
             let targetTodo = list[indexPath.row]
+            
+            removeImageFromDocument(filename: "\(targetTodo.id)")
+            
             repository.deleteTodo(targetTodo)
             tableView.reloadData()
             

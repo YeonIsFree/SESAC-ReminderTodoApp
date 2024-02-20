@@ -17,9 +17,8 @@ class TodoTable: Object {
     @Persisted var priority: String
     @Persisted var isCompleted: Bool
     @Persisted var isFlagged: Bool
-    @Persisted var image: String
     
-    convenience init(todoTitle: String, todoMemo: String, date: Date, tag: String, priority: String, image: String) {
+    convenience init(todoTitle: String, todoMemo: String, date: Date, tag: String, priority: String) {
         self.init()
         self.todoTitle = todoTitle
         self.todoMemo = todoMemo
@@ -28,7 +27,6 @@ class TodoTable: Object {
         self.priority = priority
         self.isCompleted = false
         self.isFlagged = false
-        self.image = image
     }
 
 }

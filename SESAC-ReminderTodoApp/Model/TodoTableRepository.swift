@@ -12,6 +12,10 @@ final class TodoTableRepository {
     
     private let realm = try! Realm()
     
+    func getFileURL() {
+        print(realm.configuration.fileURL)
+    }
+    
     // MARK: - Create
     
     func createTodo(_ todo: TodoTable) {

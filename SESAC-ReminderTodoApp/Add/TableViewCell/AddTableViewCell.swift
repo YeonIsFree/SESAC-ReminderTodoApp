@@ -20,7 +20,6 @@ class AddTableViewCell: BaseTableViewCell {
     
     let cellSubTitleLabel: UILabel = {
         let label = UILabel()
-        label.text = "라랄랄"
         label.font = .systemFont(ofSize: 16)
         label.textColor = .lightGray
         return label
@@ -29,7 +28,9 @@ class AddTableViewCell: BaseTableViewCell {
     let cellImageView: UIImageView = {
         let view = UIImageView()
         view.image = UIImage(systemName: "star.fill")
-        view.contentMode = .scaleAspectFit
+        view.contentMode = .scaleAspectFill
+        view.clipsToBounds = true
+        view.layer.cornerRadius = 10
         return view
     }()
     
@@ -38,7 +39,6 @@ class AddTableViewCell: BaseTableViewCell {
     func configureCell(_ index: Int) {
         let cellType = AddCellType(rawValue: index)
         cellTitleLabel.text = cellType?.title
-        
         cellImageView.isHidden = (cellType == .addImage) ? false : true
     }
     
@@ -59,9 +59,9 @@ class AddTableViewCell: BaseTableViewCell {
         
         contentView.addSubview(cellImageView)
         cellImageView.snp.makeConstraints { make in
-            make.top.bottom.equalTo(contentView)
-            make.centerY.equalTo(contentView)
-            make.trailing.equalTo(contentView).inset(10)
+            make.width.equalTo(120)
+            make.top.bottom.equalTo(contentView).inset(8)
+            make.trailing.equalTo(contentView).inset(4)
         }
     }
 }

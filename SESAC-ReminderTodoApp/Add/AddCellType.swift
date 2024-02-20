@@ -47,7 +47,7 @@ enum AddCellType: Int, CaseIterable {
     var cellHeight: CGFloat {
         switch self {
         case .todoMemo:
-            return 200
+            return 100
         default:
             return 60
         }

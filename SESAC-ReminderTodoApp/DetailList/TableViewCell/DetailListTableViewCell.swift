@@ -47,6 +47,13 @@ class DetailListTableViewCell: BaseTableViewCell {
         return label
     }()
     
+    lazy var titleStackView: UIStackView = {
+        let stackView = UIStackView(arrangedSubviews: [priorityLabel, titleLabel])
+        stackView.axis = .horizontal
+        stackView.distribution = .fillProportionally
+        return stackView
+    }()
+    
     lazy var dateTagStackView: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [dateLabel, tagLabel])
         stackView.axis = .horizontal
@@ -55,7 +62,7 @@ class DetailListTableViewCell: BaseTableViewCell {
     }()
     
     lazy var cellStackView: UIStackView = {
-        let stackView = UIStackView(arrangedSubviews: [titleLabel, memoLabel, dateTagStackView])
+        let stackView = UIStackView(arrangedSubviews: [titleStackView, memoLabel, dateTagStackView])
         stackView.axis = .vertical
         stackView.spacing = 8
         return stackView
@@ -66,6 +73,14 @@ class DetailListTableViewCell: BaseTableViewCell {
         label.font = .boldSystemFont(ofSize: 16)
         label.textColor = .gray
         return label
+    }()
+    
+    let photoImageView: UIImageView = {
+        let imageView = UIImageView(frame: .zero)
+        imageView.contentMode = .scaleAspectFill
+        imageView.clipsToBounds = true
+        imageView.layer.cornerRadius = 10
+        return imageView
     }()
     
      // MARK: - Init
@@ -88,11 +103,15 @@ class DetailListTableViewCell: BaseTableViewCell {
         memoLabel.text = todo.todoMemo
         dateLabel.text = DateFormatter.convertToString(todo.date)
         
+        // tag
         if todo.tag != "" {
             tagLabel.text = "#\(todo.tag)"
         }
-        priorityLabel.text = todo.priority
         
+        // priority
+        priorityLabel.text = priorityString(rawValue: todo.priority)?.labelString
+        
+        // complete 체크 버튼
         let image = (todo.isCompleted) ? UIImage(systemName: "checkmark.circle.fill") : UIImage(systemName: "circle")
         checkButton.setImage(image, for: .normal)
     }
@@ -125,13 +144,13 @@ class DetailListTableViewCell: BaseTableViewCell {
             make.leading.equalTo(checkButton.snp.trailing).offset(20)
         }
         
-        contentView.addSubview(priorityLabel)
-        priorityLabel.snp.makeConstraints { make in
-            make.leading.greaterThanOrEqualTo(cellStackView.snp.trailing)
-            make.trailing.equalTo(contentView.safeAreaLayoutGuide).inset(10)
-            make.centerY.equalTo(contentView.safeAreaLayoutGuide)
-            make.height.equalTo(20)
+        contentView.addSubview(photoImageView)
+        photoImageView.snp.makeConstraints { make in
+            make.size.equalTo(50)
+            make.centerY.equalTo(contentView)
+            make.trailing.equalTo(contentView.snp.trailing).inset(10)
         }
+
     }
 }
 
