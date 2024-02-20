@@ -58,7 +58,7 @@ class AddViewController: BaseViewController {
             repository.createTodo(todo)
             
             if let photo {
-                saveImageToDocument(image: photo, filename: "\(todo.id)")
+                saveImageToDocument(image: photo, filename: "\(todo.todoID)")
             }
             
             // todoList가 변경됐음을 post

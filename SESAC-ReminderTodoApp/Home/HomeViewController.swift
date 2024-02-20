@@ -19,19 +19,20 @@ final class HomeViewController: BaseViewController {
     }
     
     let repository = TodoTableRepository()
+    let listRepository = ListTableRepository()
+    
+    var myList: Results<ListTable>!
     
     // MARK: - UI Properties
     
     private lazy var todoCollectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero,
                                               collectionViewLayout: configureFlowLayout())
-        collectionView.backgroundColor = .red
         return collectionView
     }()
     
     private let listTableView: UITableView = {
-        let tableView = UITableView()
-        tableView.backgroundColor = .blue
+        let tableView = UITableView(frame: .zero, style: .insetGrouped)
         tableView.separatorStyle = .none
         return tableView
     }()
@@ -43,11 +44,14 @@ final class HomeViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        repository.getFileURL()
-        
+//        repository.getFileURL()
         addObserver()
         configureCollectionView()
+        configureTableView()
         configureToolBar()
+        
+        myList = listRepository.fetchList()
+        
     }
     
     // MARK: - Notification Methods
@@ -112,6 +116,12 @@ final class HomeViewController: BaseViewController {
                                     forCellWithReuseIdentifier: HomeCollectionViewCell.identifier)
     }
     
+    private func configureTableView() {
+        listTableView.delegate = self
+        listTableView.dataSource = self
+        listTableView.register(UITableViewCell.self, forCellReuseIdentifier: "myCell")
+    }
+    
     private func configureToolBar() {
         // Left: 미리 알림 추가
         var customView = UIButton.Configuration.plain()
@@ -142,7 +152,9 @@ final class HomeViewController: BaseViewController {
     }
     
     @objc func addListButtonTapped() {
-//        print("잘 눌립니다.")
+        let nav = UINavigationController(rootViewController: AddListViewController())
+        nav.navigationBar.tintColor = .white
+        present(nav, animated: true)
     }
 }
 
@@ -172,4 +184,20 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
         vc.navigationController?.navigationBar.tintColor = .white
         navigationController?.pushViewController(vc, animated: true)
     }
+}
+
+ // MARK: - UITableView Delegate
+
+extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return myList.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "myCell", for: indexPath)
+        cell.textLabel?.text = "테스투"
+        return cell
+    }
+    
+    
 }

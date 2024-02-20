@@ -8,17 +8,20 @@
 import Foundation
 import RealmSwift
 
-class TodoListTable: Object {
+class ListTable: Object {
     @Persisted(primaryKey: true) var listID: ObjectId
     @Persisted var regDate: Date
     @Persisted var listName: String
+    @Persisted var listType: String
+    @Persisted var listColor: String
     
     @Persisted var todoTableList: List<TodoTable>
     
-    convenience init(regDate: Date, listName: String) {
+    convenience init(regDate: Date, listName: String, listColor: String) {
         self.init()
         self.regDate = Date()
         self.listName = listName
+        self.listColor = listColor
     }
 }
 
@@ -31,6 +34,8 @@ class TodoTable: Object {
     @Persisted var priority: String
     @Persisted var isCompleted: Bool
     @Persisted var isFlagged: Bool
+    
+    @Persisted(originProperty: "todoTableList") var list: LinkingObjects<ListTable>
     
     convenience init(todoTitle: String, todoMemo: String, date: Date, tag: String, priority: String) {
         self.init()

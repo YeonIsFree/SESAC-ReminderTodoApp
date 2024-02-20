@@ -93,7 +93,7 @@ extension DetailListViewController: UITableViewDelegate, UITableViewDataSource {
         cell.configureTodoCell(todo)
         
         // 이미지 세팅
-        cell.photoImageView.image = loadImageFromDocument(filename: "\(todo.id)")
+        cell.photoImageView.image = loadImageFromDocument(filename: "\(todo.todoID)")
         
         return cell
     }
@@ -116,7 +116,7 @@ extension DetailListViewController: UITableViewDelegate, UITableViewDataSource {
             
             let targetTodo = list[indexPath.row]
             
-            removeImageFromDocument(filename: "\(targetTodo.id)")
+            removeImageFromDocument(filename: "\(targetTodo.todoID)")
             
             repository.deleteTodo(targetTodo)
             tableView.reloadData()
