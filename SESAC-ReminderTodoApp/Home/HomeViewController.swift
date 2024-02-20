@@ -25,7 +25,15 @@ final class HomeViewController: BaseViewController {
     private lazy var todoCollectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero,
                                               collectionViewLayout: configureFlowLayout())
+        collectionView.backgroundColor = .red
         return collectionView
+    }()
+    
+    private let listTableView: UITableView = {
+        let tableView = UITableView()
+        tableView.backgroundColor = .blue
+        tableView.separatorStyle = .none
+        return tableView
     }()
     
     private let toolBar = UIToolbar()
@@ -67,7 +75,15 @@ final class HomeViewController: BaseViewController {
     override func render() {
         view.addSubview(todoCollectionView)
         todoCollectionView.snp.makeConstraints { make in
-            make.edges.equalTo(view.safeAreaLayoutGuide)
+            make.top.equalTo(view.safeAreaLayoutGuide)
+            make.horizontalEdges.equalTo(view.safeAreaLayoutGuide)
+            make.height.equalTo(view.safeAreaLayoutGuide).multipliedBy(0.5)
+        }
+        
+        view.addSubview(listTableView)
+        listTableView.snp.makeConstraints { make in
+            make.top.equalTo(todoCollectionView.snp.bottom)
+            make.horizontalEdges.bottom.equalTo(view.safeAreaLayoutGuide)
         }
         
         view.addSubview(toolBar)
@@ -113,8 +129,7 @@ final class HomeViewController: BaseViewController {
         let space = UIBarButtonItem.flexibleSpace()
         
         // Right: 목록 추가 버튼
-        let addListButton = UIBarButtonItem()
-        addListButton.title = "목록 추가"
+        let addListButton = UIBarButtonItem(title: "목록 추가", style: .plain, target: self, action: #selector(addListButtonTapped))
         
         toolBar.items = [addButton, space, addListButton]
         toolBar.tintColor = .white
@@ -124,6 +139,10 @@ final class HomeViewController: BaseViewController {
         let nav = UINavigationController(rootViewController: AddViewController())
         nav.navigationBar.tintColor = .white
         present(nav, animated: true)
+    }
+    
+    @objc func addListButtonTapped() {
+//        print("잘 눌립니다.")
     }
 }
 
