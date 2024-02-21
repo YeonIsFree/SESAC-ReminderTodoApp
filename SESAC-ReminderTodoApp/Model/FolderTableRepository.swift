@@ -8,16 +8,16 @@
 import Foundation
 import RealmSwift
 
-final class ListTableRepository {
+final class FolderTableRepository {
     
     private let realm = try! Realm()
     
      // MARK: - Create
     
-    func createList(_ list: ListTable) {
+    func createList(_ folder: FolderTable) {
         do {
             try realm.write {
-                realm.add(list)
+                realm.add(folder)
                 print("Realm Saved--")
             }
         } catch {
@@ -27,7 +27,7 @@ final class ListTableRepository {
     
      // MARK: - Read
     
-    func fetchList() -> Results<ListTable> {
-        return realm.objects(ListTable.self)
+    func fetchFolderList() -> Results<FolderTable> {
+        return realm.objects(FolderTable.self)
     }
 }

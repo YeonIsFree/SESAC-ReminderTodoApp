@@ -10,6 +10,7 @@ import RealmSwift
 
 class DetailListViewController: BaseViewController {
     
+    let folderRepository = FolderTableRepository()
     let repository = TodoTableRepository()
     
     var list: Results<TodoTable>! {
@@ -19,6 +20,7 @@ class DetailListViewController: BaseViewController {
     }
     
     var cellType = HomeCellType.all  // 이전 화면에서 전달된 현재 Cell 타입
+    var folder: FolderTable?         // 이전 화면에서 전달
     
     // MARK: - UI Properties
     
@@ -50,7 +52,15 @@ class DetailListViewController: BaseViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        list = repository.fetchTodoList(cellType)
+        
+        if let folder {
+            print("folder", folder.folderName)
+            list = folder.todoTableList.sorted(byKeyPath: "date")
+            print("folder", list)
+        } else {
+            print("none folder")
+            list = repository.fetchTodoList(cellType)
+        }
     }
     
     // MARK: - UI Configuration Method

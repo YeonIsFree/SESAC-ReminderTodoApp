@@ -13,7 +13,7 @@ final class TodoTableRepository {
     private let realm = try! Realm()
     
     func getFileURL() {
-        print(realm.configuration.fileURL)
+        print(realm.configuration.fileURL!)
     }
     
     // MARK: - Create
@@ -22,7 +22,18 @@ final class TodoTableRepository {
         do {
             try realm.write {
                 realm.add(todo)
-                print("Realm Saved--")
+                print("Realm Saved-- todo")
+            }
+        } catch {
+            print(error)
+        }
+    }
+    
+    func createViaFolder(folder: FolderTable, todo: TodoTable) {
+        do {
+            try realm.write {
+                folder.todoTableList.append(todo)
+                print("Realm Saved-- folder")
             }
         } catch {
             print(error)
@@ -34,8 +45,6 @@ final class TodoTableRepository {
     func fetchTodoList(_ cellType: HomeCellType) -> Results<TodoTable> {
         let start = Calendar.current.startOfDay(for: Date())
         let end: Date = Calendar.current.date(byAdding: .day, value: 1, to: start) ?? Date()
-        
-//        let predicate = NSPredicate(format: "regDate >= %@ && regDate < %@", start as NSDate, end as NSDate)
         
         switch cellType {
         case .today:
@@ -54,6 +63,10 @@ final class TodoTableRepository {
     func fetchSortedBy(_ keyPath: String) -> Results<TodoTable> {
         return realm.objects(TodoTable.self).sorted(byKeyPath: keyPath)
     }
+    
+    //    func fetchListByFolder(_ folderName: String) -> Results<TodoTable> {
+    //
+    //    }
     
     // MARK: - Update
     
@@ -79,5 +92,5 @@ final class TodoTableRepository {
             print("delete error", error)
         }
     }
-
+    
 }

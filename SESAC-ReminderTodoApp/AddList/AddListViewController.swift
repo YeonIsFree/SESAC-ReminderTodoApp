@@ -23,7 +23,7 @@ class AddListViewController: BaseViewController {
     }
     
     let repository = TodoTableRepository()
-    let listRepository = ListTableRepository()
+    let listRepository = FolderTableRepository()
     
      // MARK: - UI Property
     
@@ -55,6 +55,7 @@ class AddListViewController: BaseViewController {
         addListTableView.register(ListTitleTableViewCell.self, forCellReuseIdentifier: ListTitleTableViewCell.identifier)
         addListTableView.register(ListTypeTableViewCell.self, forCellReuseIdentifier: ListTypeTableViewCell.identifier)
         addListTableView.register(ListColorTableViewCell.self, forCellReuseIdentifier: ListColorTableViewCell.identifier)
+//        addListTableView.register(MyListViewController.self, forCellReuseIdentifier: MyListViewController.identifier)
     }
     
     private func configureNavigationBar() {
@@ -77,7 +78,7 @@ class AddListViewController: BaseViewController {
             self.view.makeToast("목록 이름을 입력해주세요", duration: 2.0, position: .top)
             return
         } else {
-            let list = ListTable(regDate: Date(), listName: listName!)
+            let list = FolderTable(regDate: Date(), folderName: listName!)
             listRepository.createList(list)
         }
         
@@ -114,9 +115,11 @@ extension AddListViewController: UITableViewDataSource, UITableViewDelegate {
             cell.titleImageView.tintColor = selectedColor
             
             return cell
+            
         case AddListCellType.listType.rawValue:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: ListTypeTableViewCell.identifier) as? ListTypeTableViewCell else { return UITableViewCell() }
             return cell
+            
         case AddListCellType.listColor.rawValue:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: ListColorTableViewCell.identifier, for: indexPath) as? ListColorTableViewCell else { return UITableViewCell() }
             

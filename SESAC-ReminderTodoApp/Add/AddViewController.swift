@@ -12,10 +12,11 @@ class AddViewController: BaseViewController {
     
     let repository = TodoTableRepository()
     
-    var todoTitle: String = ""
+    var todoTitle: String?
     var todoMemo: String = ""
+    var folder: FolderTable?
     
-    // 다른 화면에서 클로저로 받아온 값들을 담아두는 배열 (Textfield Memo, date는 제외)
+    // 다른 화면에서 클로저로 받아온 값들을 담아두는 배열 (Textfield Memo, date, folder 는 제외)
     // AddCellType Enum의 rawValue 순서로 저장.
     var changedValues: [String] = Array(repeating: "", count: AddCellType.allCases.count)
     
@@ -45,27 +46,38 @@ class AddViewController: BaseViewController {
     // MARK: - selector
     
     @objc func addButtonTapped() {
-        // 제목 작성 됐는지 검사
-        if todoTitle == "" {
-            self.view.makeToast("제목을 입력해주세요", duration: 2.0, position: .top)
-        } else {
-            let todo = TodoTable(todoTitle: todoTitle,
-                                 todoMemo: todoMemo,
-                                 date: DateFormatter.convertToDate(changedValues[AddCellType.todoDate.rawValue]) ?? Date(),
-                                 tag: changedValues[AddCellType.todoTag.rawValue],
-                                 priority: changedValues[AddCellType.priority.rawValue])
-            
-            repository.createTodo(todo)
-            
-            if let photo {
-                saveImageToDocument(image: photo, filename: "\(todo.todoID)")
-            }
-            
-            // todoList가 변경됐음을 post
-            NotificationCenter.default.post(name: AddViewController.todoListDidChanged, object: nil)
-            
-            dismiss(animated: true)
+        guard let todoTitle else {
+            self.view.makeToast("제목을 입력해주세요", position: .center)
+            return
         }
+        
+        let todo = TodoTable(todoTitle: todoTitle,
+                             todoMemo: todoMemo,
+                             date: DateFormatter.convertToDate(changedValues[AddCellType.todoDate.rawValue]) ?? Date(),
+                             tag: changedValues[AddCellType.todoTag.rawValue],
+                             priority: changedValues[AddCellType.priority.rawValue])
+        
+        // [데이터 저장]
+        // 선택된 폴더가 있다면 폴더를 통해 저장하고,
+        if let folder {
+            print("folder 가 있었음")
+            repository.createViaFolder(folder: folder, todo: todo)
+        }
+        // 선택된 폴더가 없다면 평범하게 저장한다.
+        else {
+            repository.createTodo(todo)
+        }
+        
+        // [사진 저장]
+        if let photo {
+            saveImageToDocument(image: photo, filename: "\(todo.todoID)")
+        }
+        
+        // todoList가 변경됐음을 post
+        NotificationCenter.default.post(name: AddViewController.todoListDidChanged, object: nil)
+        
+        dismiss(animated: true)
+        
     }
     
     @objc func cancelButtonTapped() {
@@ -171,9 +183,11 @@ extension AddViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let cellType = AddCellType.allCases[indexPath.section]
+        
         switch cellType {
         case .todoMemo:
             break
+            
         case .addImage:
             // show action sheet
             let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
@@ -188,6 +202,15 @@ extension AddViewController: UITableViewDelegate, UITableViewDataSource {
             alert.addAction(cancel)
             
             present(alert, animated: true)
+            
+        case .addFolder:
+            let vc = FolderViewController()
+            vc.selectedFolder = { folder in
+                self.folder = folder
+                self.addTableView.reloadData()
+            }
+            navigationController?.pushViewController(vc, animated: true)
+            
         default:
             if let vc = cellType.viewController {
                 vc.changedValue = { value in
@@ -233,3 +256,5 @@ extension AddViewController: UITextFieldDelegate {
 extension AddViewController {
     static let todoListDidChanged = Notification.Name(rawValue: "todoListChanged")
 }
+
+

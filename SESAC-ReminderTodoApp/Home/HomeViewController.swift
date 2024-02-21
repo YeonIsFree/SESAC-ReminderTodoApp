@@ -19,9 +19,9 @@ final class HomeViewController: BaseViewController {
     }
     
     let repository = TodoTableRepository()
-    let listRepository = ListTableRepository()
+    let listRepository = FolderTableRepository()
     
-    var myList: Results<ListTable>!
+    var folderList: Results<FolderTable>!
     
     // MARK: - UI Properties
     
@@ -43,14 +43,13 @@ final class HomeViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-//        repository.getFileURL()
+        repository.getFileURL()
         addObserver()
         configureCollectionView()
         configureTableView()
         configureToolBar()
         
-        myList = listRepository.fetchList()
+        folderList = listRepository.fetchFolderList()
         
     }
     
@@ -154,9 +153,14 @@ final class HomeViewController: BaseViewController {
     }
     
     @objc func addButtonTapped() {
-        let nav = UINavigationController(rootViewController: AddViewController())
-        nav.navigationBar.tintColor = .white
-        present(nav, animated: true)
+        if folderList.isEmpty {
+            view.self.makeToast("목록을 먼저 생성해주세요", position: .center)
+            return
+        } else {
+            let nav = UINavigationController(rootViewController: AddViewController())
+            nav.navigationBar.tintColor = .white
+            present(nav, animated: true)
+        }
     }
     
     @objc func addListButtonTapped() {
@@ -188,25 +192,41 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
         let vc = DetailListViewController()
         let cellType = HomeCellType.allCases[indexPath.item]
         vc.cellType = cellType
+//        vc.folderName = nil
         vc.navigationItem.title = cellType.title
         vc.navigationController?.navigationBar.tintColor = .white
         navigationController?.pushViewController(vc, animated: true)
     }
 }
 
- // MARK: - UITableView Delegate
+// MARK: - UITableView Delegate
 
 extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return myList.count
+        return folderList.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: ListTypeTableViewCell.identifier, for: indexPath) as? ListTypeTableViewCell else { return UITableViewCell() }
         
-        let listItem = myList[indexPath.row]
-        cell.typeTitle.text = listItem.listName
-        cell.typeButton.setTitle("3", for: .normal)
+        cell.accessoryType = .disclosureIndicator
+        cell.selectionStyle = .none
+        
+        let folder = folderList[indexPath.row]
+        cell.typeTitle.text = folder.folderName
+        cell.typeButton.setTitle("\(folder.todoTableList.count)", for: .normal)
+        
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let vc = DetailListViewController()
+        vc.cellType = HomeCellType.all
+        vc.folder = folderList[indexPath.row]
+        navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 50
     }
 }

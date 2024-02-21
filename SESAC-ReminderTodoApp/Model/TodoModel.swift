@@ -9,19 +9,19 @@ import Foundation
 import RealmSwift
 import UIKit
 
-class ListTable: Object {
-    @Persisted(primaryKey: true) var listID: ObjectId
+class FolderTable: Object {
+    @Persisted(primaryKey: true) var folderID: ObjectId
     @Persisted var regDate: Date
-    @Persisted var listName: String
-    @Persisted var listType: String
+    @Persisted var folderName: String
+    @Persisted var folderType: String // 일단 안씀
 //    @Persisted var listColor: UIColor
     
     @Persisted var todoTableList: List<TodoTable>
     
-    convenience init(regDate: Date, listName: String) {
+    convenience init(regDate: Date, folderName: String) {
         self.init()
         self.regDate = Date()
-        self.listName = listName
+        self.folderName = folderName
 //        self.listColor = listColor
     }
 }
@@ -36,7 +36,7 @@ class TodoTable: Object {
     @Persisted var isCompleted: Bool
     @Persisted var isFlagged: Bool
     
-    @Persisted(originProperty: "todoTableList") var list: LinkingObjects<ListTable>
+    @Persisted(originProperty: "todoTableList") var folder: LinkingObjects<FolderTable>
     
     convenience init(todoTitle: String, todoMemo: String, date: Date, tag: String, priority: String) {
         self.init()

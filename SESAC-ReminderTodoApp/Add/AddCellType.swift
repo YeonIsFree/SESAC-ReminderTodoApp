@@ -13,6 +13,7 @@ enum AddCellType: Int, CaseIterable {
     case todoTag
     case priority
     case addImage
+    case addFolder
     
     var title: String {
         switch self {
@@ -26,6 +27,8 @@ enum AddCellType: Int, CaseIterable {
             return "우선 순위"
         case .addImage:
             return "이미지 추가"
+        case .addFolder:
+            return "목록"
         }
     }
     
@@ -41,6 +44,8 @@ enum AddCellType: Int, CaseIterable {
             return PriorityViewController()
         case .addImage:
             return nil
+        case .addFolder:
+            return FolderViewController()
         }
     }
     
