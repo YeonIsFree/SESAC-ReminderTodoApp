@@ -7,21 +7,22 @@
 
 import Foundation
 import RealmSwift
+import UIKit
 
 class ListTable: Object {
     @Persisted(primaryKey: true) var listID: ObjectId
     @Persisted var regDate: Date
     @Persisted var listName: String
     @Persisted var listType: String
-    @Persisted var listColor: String
+//    @Persisted var listColor: UIColor
     
     @Persisted var todoTableList: List<TodoTable>
     
-    convenience init(regDate: Date, listName: String, listColor: String) {
+    convenience init(regDate: Date, listName: String) {
         self.init()
         self.regDate = Date()
         self.listName = listName
-        self.listColor = listColor
+//        self.listColor = listColor
     }
 }
 
@@ -47,5 +48,4 @@ class TodoTable: Object {
         self.isCompleted = false
         self.isFlagged = false
     }
-
 }

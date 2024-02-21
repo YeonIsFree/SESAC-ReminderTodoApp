@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import RealmSwift
 
 class AddListViewController: BaseViewController {
     
@@ -21,6 +22,9 @@ class AddListViewController: BaseViewController {
         }
     }
     
+    let repository = TodoTableRepository()
+    let listRepository = ListTableRepository()
+    
      // MARK: - UI Property
     
     let addListTableView: UITableView = {
@@ -33,6 +37,7 @@ class AddListViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        repository.getFileURL()
         configureTableView()
         configureNavigationBar()
     }
@@ -68,6 +73,15 @@ class AddListViewController: BaseViewController {
     }
     
     @objc private func doneButtonTapped() {
+        if listName == "" || listName == nil {
+            self.view.makeToast("목록 이름을 입력해주세요", duration: 2.0, position: .top)
+            return
+        } else {
+            let list = ListTable(regDate: Date(), listName: listName!)
+            listRepository.createList(list)
+        }
+        
+        NotificationCenter.default.post(name: AddListViewController.listDidChanged, object: nil)
         
         dismiss(animated: true)
     }
@@ -94,6 +108,8 @@ extension AddListViewController: UITableViewDataSource, UITableViewDelegate {
         switch indexPath.section {
         case AddListCellType.listTitle.rawValue:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: ListTitleTableViewCell.identifier, for: indexPath) as? ListTitleTableViewCell else { return UITableViewCell() }
+            
+            cell.titleTextField.delegate = self
             
             cell.titleImageView.tintColor = selectedColor
             
@@ -136,8 +152,17 @@ extension AddListViewController: UICollectionViewDataSource, UICollectionViewDel
     }
 }
 
+ // MARK: - UITextField Delegate
+
 extension AddListViewController: UITextFieldDelegate {
     func textFieldDidEndEditing(_ textField: UITextField) {
         listName = textField.text!
+        print(listName)
     }
+}
+
+ // MARK: -
+
+extension AddListViewController {
+    static let listDidChanged = Notification.Name("listDidChanged")
 }

@@ -72,6 +72,14 @@ final class HomeViewController: BaseViewController {
             print("Complete List DID CHANGED!")
             self?.todoCollectionView.reloadData()
         })
+        
+        token = NotificationCenter.default.addObserver(forName: AddListViewController.listDidChanged,
+                                                       object: nil,
+                                                       queue: OperationQueue.main,
+                                                       using: { [weak self] _ in
+            print("List DID CHANGED!")
+            self?.listTableView.reloadData()
+        })
     }
     
     // MARK: - UI Configuration Methods
@@ -119,7 +127,7 @@ final class HomeViewController: BaseViewController {
     private func configureTableView() {
         listTableView.delegate = self
         listTableView.dataSource = self
-        listTableView.register(UITableViewCell.self, forCellReuseIdentifier: "myCell")
+        listTableView.register(ListTypeTableViewCell.self, forCellReuseIdentifier: ListTypeTableViewCell.identifier)
     }
     
     private func configureToolBar() {
@@ -194,10 +202,11 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "myCell", for: indexPath)
-        cell.textLabel?.text = "테스투"
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: ListTypeTableViewCell.identifier, for: indexPath) as? ListTypeTableViewCell else { return UITableViewCell() }
+        
+        let listItem = myList[indexPath.row]
+        cell.typeTitle.text = listItem.listName
+        cell.typeButton.setTitle("3", for: .normal)
         return cell
     }
-    
-    
 }
